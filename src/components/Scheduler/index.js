@@ -12,69 +12,104 @@ import Task from 'components/Task';
 
 export default class Scheduler extends Component {
     static propTypes = {
-        actions: PropTypes.object.isRequired,
-        todos:   PropTypes.array.isRequired,
+        actions:  PropTypes.object.isRequired,
+        todoList: PropTypes.array.isRequired,
     };
     static defaultProps = {
-        actions: {},
-        todos:   [],
+        actions:  {},
+        todoList: [],
     };
+    constructor () {
+        super();
+
+        this.state = {
+            text: '',
+        };
+    }
 
     componentDidMount () {
         this.props.actions.fetchTodos();
-        this.refetch = setInterval(this.props.actions.fetchTodos(), 10000);
+        // this.refetch = setInterval(this.props.actions.fetchTodos(), 10000);
     }
     componentWillUnmount () {
-        clearInterval(this.refetch);
+        // clearInterval(this.refetch);
     }
 
     // state = initialState;
 
-    handleSubmit = (event) => event.preventDefault();
+    handleSubmit = (event) => {
+        event.preventDefault();
+        this.createTodo();
+    };
 
-    complete = (id) =>
-        this.setState(({ todos }) => ({
-            todos: todos.map((todo) => {
-                if (todo.id === id) {
-                    todo.completed = !todo.completed;
-                }
+    handleInputOnChange = (event) => {
+        const { value: text } = event.target;
 
-                return todo;
-            }),
-        }));
+        this.setState(() => ({ text }));
+    };
 
-    changePriority = (id) =>
-        this.setState(({ todos }) => ({
-            todos: todos.map((todo) => {
-                if (todo.id === id) {
-                    todo.important = !todo.important;
-                }
+    handleInputKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.createTodo();
+        }
+    };
 
-                return todo;
-            }),
-        }));
+    createTodo = () => {
+        const { text } = this.state;
 
-    completeAll = () =>
-        this.setState(({ todos }) => ({
-            todso: todos.map((todo) => {
-                todo.completed = true;
+        if (!text) {
+            return;
+        }
+        this.props.actions.createTodo(text);
 
-                return todo;
-            }),
-        }));
+        this.setState(() => ({ text: '' }));
+    };
+
+    // complete = (id) =>
+    //     this.setState(({ todos }) => ({
+    //         todoList: todos.map((todo) => {
+    //             if (todo.id === id) {
+    //                 todo.completed = !todo.completed;
+    //             }
+    //
+    //             return todo;
+    //         }),
+    //     }));
+
+    // changePriority = (id) =>
+    //     this.setState(({ todos }) => ({
+    //         todoList: todos.map((todo) => {
+    //             if (todo.id === id) {
+    //                 todo.important = !todo.important;
+    //             }
+    //
+    //             return todo;
+    //         }),
+    //     }));
+
+    // completeAll = () =>
+    //     this.setState(({ todos }) => ({
+    //         todoList: todos.map((todo) => {
+    //             todo.completed = true;
+    //
+    //             return todo;
+    //         }),
+    //     }));
 
     render () {
         // const { todos } = this.state;
-        // console.log(`this.props --> ${JSON.stringify(this.props, null, 2)}`);
-        const { todos } = this.props;
-        const allCompleted = todos.every((todo) => todo.completed);
-        const todoList = todos.map(({ id, message, completed, important }) => (
+        console.log(`this.props -1-> ${JSON.stringify(this.props, null, 2)}`);
+        const { todoList } = this.props;
+        console.log(`todoList -2--> ${JSON.stringify(todoList, null, 2)}`);
+        // const allCompleted = todoList.every((todo) => todo.completed);
+        const todoList1 = todoList.map(({ id, message, completed, favorite }) => (
             <Task
                 changePriority = { this.changePriority }
                 complete = { this.complete }
                 completed = { completed }
                 id = { id }
-                important = { important }
+                favorite = { favorite }
                 key = { id }
                 message = { message }
             />
@@ -89,14 +124,19 @@ export default class Scheduler extends Component {
                     </header>
                     <section>
                         <form onSubmit = { this.handleSubmit }>
-                            <input placeholder = 'Описание моей новой задачи' type = 'text' />
+                            <input
+                                placeholder = 'Описание моей новой задачи'
+                                type = 'text'
+                                onChange = { this.handleInputOnChange }
+                                onKeyPress = { this.handleInputKeyPress }
+                            />
                             <button>Добавить задачу</button>
                         </form>
-                        <ul>{todoList}</ul>
+                        <ul>{todoList1}</ul>
                     </section>
                     <footer>
                         <Checkbox
-                            checked = { allCompleted }
+                            // checked = { allCompleted }
                             color1 = '#363636'
                             color2 = '#fff'
                             onClick = { this.completeAll }

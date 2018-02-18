@@ -8,10 +8,18 @@ const initialState = Immutable.List([]);
 export const todoList = (state = initialState, action) => {
     switch (action.type) {
         case todoTypes.FETCH_TODOS_SUCCESS:
-            console.log(`Actions.payload in reducer FETCH_TODOS_SUCCESS --> ${action.payload}`);
+            // console.log(`Actions.payload in reducer FETCH_TODOS_SUCCESS --> ${action.payload}`);
             return action.payload;
-        case todoTypes.CREATE_TODO:
-            return state.insert(0, action.payload);
+
+        case todoTypes.CREATE_TODO_SUCCESS:
+            // return state.insert(0, action.payload);
+            console.log(`createTodo reducer --> ${JSON.stringify(action.payload, null, 2)}`);
+            // const a = state.todoList.insert(0, action.payload);
+            // console.log(`createTodo reducer a --> ${JSON.stringify(a, null, 2)}`);
+
+            return state.todoList.unshift(action.payload);
+            // return state.insert(0, action.payload);
+
         case todoTypes.DELETE_TODO: {
             const indexItemToDelete = state.indexOf(action.payload);
 

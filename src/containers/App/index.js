@@ -11,17 +11,17 @@ import Scheduler from 'components/Scheduler';
 
 class App extends Component {
     render () {
-        const { actions, todos } = this.props;
+        const { actions, todoList } = this.props;
 
-        return <Scheduler actions = { actions } todos = { todos } />;
+        return <Scheduler actions = { actions } todoList = { todoList } />;
     }
 }
 
 
 const mapStateToProps = (state) => {
-
+    console.log(`state --> ${typeof state.todoList}`);
     return {
-        todos: state.todos,
+        todoList: state.todoList,
     };
 };
 

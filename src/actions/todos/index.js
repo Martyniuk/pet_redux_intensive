@@ -8,7 +8,7 @@ export default Object.freeze({
         };
     },
     fetchTodosSuccess: (todos) => {
-        console.log(`payload in fetchTodosSuccess action --> ${todos}`);
+        // console.log(`payload in fetchTodosSuccess action --> ${todos}`);
         return {
             type:    types.FETCH_TODOS_SUCCESS,
             payload: todos,
@@ -25,6 +25,19 @@ export default Object.freeze({
         return {
             type:    types.CREATE_TODO,
             payload: text,
+        };
+    },
+    createTodoSuccess: (todo) => {
+        return {
+            type:    types.CREATE_TODO_SUCCESS,
+            payload: todo,
+        };
+    },
+    createTodoFail: (error) => {
+        return {
+            type:    types.CREATE_TODO_FAIL,
+            payload: error,
+            error:   true,
         };
     },
     deleteTodo: (id) => {

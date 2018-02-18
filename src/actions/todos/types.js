@@ -1,4 +1,7 @@
 export default Object.freeze({
+    FETCH_TODOS:         'FETCH_TODOS',
+    FETCH_TODOS_SUCCESS: 'FETCH_TODOS_SUCCESS',
+    FETCH_TODOS_FAIL:    'FETCH_TODOS_FAIL',
 
     CREATE_TODO: 'CREATE_TODO',
 

@@ -1,8 +1,7 @@
 // Core
 import { combineReducers } from 'redux';
-
-import { todosList } from './todos';
+import { todoList } from './todos';
 
 export const rootReducer = combineReducers({
-    todosList,
+    todoList,
 });

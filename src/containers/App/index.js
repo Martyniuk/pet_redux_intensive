@@ -1,12 +1,34 @@
 // Core
 import React, { Component } from 'react';
-import store from 'store';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+// Instruments
+import todoActions from 'actions/todos';
+
 // Components
 import Scheduler from 'components/Scheduler';
 
-export default class App extends Component {
+class App extends Component {
     render () {
-        console.log(store.getState());
-        return <Scheduler />;
+        const { actions, todos } = this.props;
+
+        return <Scheduler actions = { actions } todos = { todos } />;
     }
 }
+
+
+const mapStateToProps = (state) => {
+
+    return {
+        todos: state.todos,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators({ ...todoActions }, dispatch),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

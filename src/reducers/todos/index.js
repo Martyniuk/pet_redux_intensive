@@ -1,20 +1,23 @@
 import Immutable from 'immutable';
 
 // Types
-import todosTypes from 'actions/todos/types';
+import todoTypes from 'actions/todos/types';
 
 const initialState = Immutable.List([]);
 
-export const todosList = (state = initialState, action) => {
+export const todoList = (state = initialState, action) => {
     switch (action.type) {
-        case todosTypes.CREATE_TODO:
+        case todoTypes.FETCH_TODOS_SUCCESS:
+            console.log(`Actions.payload in reducer FETCH_TODOS_SUCCESS --> ${action.payload}`);
+            return action.payload;
+        case todoTypes.CREATE_TODO:
             return state.insert(0, action.payload);
-        case todosTypes.DELETE_TODO: {
+        case todoTypes.DELETE_TODO: {
             const indexItemToDelete = state.indexOf(action.payload);
 
             return state.delete(indexItemToDelete);
         }
-        case todosTypes.EDIT_TODO: {
+        case todoTypes.EDIT_TODO: {
             const indexItemToEdit = state.indexOf(action.payload);
 
             return state.delete(indexItemToEdit);

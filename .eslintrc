@@ -191,7 +191,8 @@ rules:
   space-unary-ops: 1
   spaced-comment: [0, "always"]
   wrap-regex: 1
-  arrow-body-style: [1, "as-needed", { "requireReturnForObjectLiteral": false }]
+#  arrow-body-style: [0, "as-needed", { "requireReturnForObjectLiteral": false }]
+  arrow-body-style: 0
   arrow-parens: [1, "always"]
   arrow-spacing: 1
   constructor-super: 1

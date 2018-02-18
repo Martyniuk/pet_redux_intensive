@@ -1,5 +1,6 @@
 // Core
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // Instruments
 import Styles from './styles';
@@ -10,7 +11,24 @@ import Checkbox from 'theme/assets/Checkbox';
 import Task from 'components/Task';
 
 export default class Scheduler extends Component {
-    state = initialState;
+    static propTypes = {
+        actions: PropTypes.object.isRequired,
+        todos:   PropTypes.array.isRequired,
+    };
+    static defaultProps = {
+        actions: {},
+        todos:   [],
+    };
+
+    componentDidMount () {
+        this.props.actions.fetchTodos();
+        this.refetch = setInterval(this.props.actions.fetchTodos(), 10000);
+    }
+    componentWillUnmount () {
+        clearInterval(this.refetch);
+    }
+
+    // state = initialState;
 
     handleSubmit = (event) => event.preventDefault();
 
@@ -46,7 +64,9 @@ export default class Scheduler extends Component {
         }));
 
     render () {
-        const { todos } = this.state;
+        // const { todos } = this.state;
+        // console.log(`this.props --> ${JSON.stringify(this.props, null, 2)}`);
+        const { todos } = this.props;
         const allCompleted = todos.every((todo) => todo.completed);
         const todoList = todos.map(({ id, message, completed, important }) => (
             <Task

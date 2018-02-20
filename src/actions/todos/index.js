@@ -53,41 +53,36 @@ export default Object.freeze({
         payload: error,
         error:   true,
     }),
-    completeTodo: (todo) => {
+    toggleCompleted: (todo) => ({
+        type:    types.TOGGLE_COMPLETED,
+        payload: todo,
+    }),
+    toggleCompletedSuccess: (todo) => ({
+        type:    types.TOGGLE_COMPLETED_SUCCESS,
+        payload: todo,
+    }),
+    toggleCompletedFail: (error) => ({
+        type:    types.TOGGLE_COMPLETED_FAIL,
+        payload: error,
+        error:   true,
+    }),
+    toggleFavourite: (todo) => {
         return {
-            type:    types.COMPLETE_TODO,
+            type:    types.TOGGLE_FAVOURITE,
             payload: todo,
         };
     },
-    completeTodoSuccess: (todo) => {
+    toggleFavouriteSuccess: (todo) => {
         return {
-            type:    types.COMPLETE_TODO_SUCCESS,
+            type:    types.TOGGLE_FAVOURITE_SUCCESS,
             payload: todo,
         };
     },
-    completeTodoFail: (error) => {
+    toggleFavouriteFail: (error) => {
         return {
-            type:    types.COMPLETE_TODO_FAIL,
+            type:    types.TOGGLE_FAVOURITE_FAIL,
             payload: error,
             error:   true,
-        };
-    },
-    // toggleUncompleted: (id) => {
-    //     return {
-    //         type:    types.TOGGLE_UNCOMPLETED,
-    //         payload: id,
-    //     };
-    // },
-    addToFavourites: (id) => {
-        return {
-            type:    types.ADD_TO_FAVOURITES,
-            payload: id,
-        };
-    },
-    deleteFromFavourites: (id) => {
-        return {
-            type:    types.DELETE_FROM_FAVOURITES,
-            payload: id,
         };
     },
 });

@@ -3,7 +3,7 @@ import { call, put } from 'redux-saga/effects';
 import todoActions from 'actions/todos';
 import { api, token } from 'instruments/api';
 
-export function* completeTodoWorker ({ payload }) {
+export function* toggleCompletedWorker ({ payload }) {
     try {
         const options = {
             method:  'PUT',
@@ -20,9 +20,9 @@ export function* completeTodoWorker ({ payload }) {
             throw new Error(message);
         }
 
-        yield put(todoActions.completeTodoSuccess(data[0]));
+        yield put(todoActions.toggleCompletedSuccess(data[0]));
     } catch ({ message }) {
-        yield put(todoActions.completeTodoFail(message));
+        yield put(todoActions.toggleCompletedFail(message));
     }
 
 }

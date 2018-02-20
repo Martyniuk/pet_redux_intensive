@@ -34,8 +34,6 @@ export default class Scheduler extends Component {
         // clearInterval(this.refetch);
     }
 
-    // state = initialState;
-
     handleSubmit = (event) => {
         event.preventDefault();
         this.createTodo();
@@ -72,19 +70,18 @@ export default class Scheduler extends Component {
             completed: !todoById.completed,
         });
 
-        actions.completeTodo(updatedTodo);
+        actions.toggleCompleted(updatedTodo);
     };
-    
-    // changePriority = (id) =>
-    //     this.setState(({ todos }) => ({
-    //         todoList: todos.map((todo) => {
-    //             if (todo.id === id) {
-    //                 todo.important = !todo.important;
-    //             }
-    //
-    //             return todo;
-    //         }),
-    //     }));
+
+    changePriority = (id) => {
+        const { actions, todoList } = this.props;
+        const [todoById] = todoList.filter((todo) => todo.id === id);
+        const updatedTodo = Object.assign({}, todoById, {
+            favorite: !todoById.favorite,
+        });
+
+        actions.toggleFavourite(updatedTodo);
+    };
 
     // completeAll = () =>
     //     this.setState(({ todos }) => ({

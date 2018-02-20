@@ -7,6 +7,7 @@ export function* rootSaga () {
         todos.createTodoWatcher(),
         todos.deleteTodoWatcher(),
         todos.editTodoWatcher(),
-        todos.completeTodoWatcher()
+        todos.toggleCompletedWatcher(),
+        todos.toggleFavouriteWatcher()
     ]);
 }

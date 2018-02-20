@@ -5,7 +5,8 @@ import { fetchTodosWorker } from './workers/fetchTodos';
 import { createTodoWorker } from './workers/createTodo';
 import { deleteTodoWorker } from './workers/deleteTodo';
 import { editTodoWorker } from './workers/editTodo';
-import { completeTodoWorker } from './workers/completeTodo';
+import { toggleCompletedWorker } from './workers/toggleCompletedTodo';
+import { toggleFavouriteWorker } from './workers/toggleFavouriteTodo';
 
 export default Object.freeze({
     * fetchTodosWatcher () {
@@ -20,7 +21,10 @@ export default Object.freeze({
     * editTodoWatcher () {
         yield takeEvery(types.EDIT_TODO, editTodoWorker);
     },
-    * completeTodoWatcher () {
-        yield takeEvery(types.COMPLETE_TODO, completeTodoWorker);
+    * toggleCompletedWatcher () {
+        yield takeEvery(types.TOGGLE_COMPLETED, toggleCompletedWorker);
+    },
+    * toggleFavouriteWatcher () {
+        yield takeEvery(types.TOGGLE_FAVOURITE, toggleFavouriteWorker);
     },
 });

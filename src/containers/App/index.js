@@ -19,9 +19,8 @@ class App extends Component {
 
 
 const mapStateToProps = (state) => {
-    console.log(`state --> ${typeof state.todoList}`);
     return {
-        todoList: state.todoList,
+        todoList: state.todoList.toJS(),
     };
 };
 

@@ -1,38 +1,35 @@
-import Immutable from 'immutable';
+import { List, fromJS } from 'immutable';
 
 // Types
 import todoTypes from 'actions/todos/types';
 
-const initialState = Immutable.List([]);
+const initialState = List([]);
 
-export const todoList = (state = initialState, action) => {
-    switch (action.type) {
+export const todoList = (state = initialState, { type, payload }) => {
+    switch (type) {
         case todoTypes.FETCH_TODOS_SUCCESS:
-            // console.log(`Actions.payload in reducer FETCH_TODOS_SUCCESS --> ${action.payload}`);
-            return action.payload;
+            return fromJS(payload);
 
-        case todoTypes.CREATE_TODO_SUCCESS:
-            // return state.insert(0, action.payload);
-            console.log(`createTodo reducer --> ${JSON.stringify(action.payload, null, 2)}`);
-            // const a = state.todoList.insert(0, action.payload);
-            // console.log(`createTodo reducer a --> ${JSON.stringify(a, null, 2)}`);
+        case todoTypes.CREATE_TODO_SUCCESS: {
+            const newTodo = fromJS(payload);
 
-            return state.todoList.unshift(action.payload);
-            // return state.insert(0, action.payload);
-
-        case todoTypes.DELETE_TODO: {
-            const indexItemToDelete = state.indexOf(action.payload);
-
-            return state.delete(indexItemToDelete);
+            return state.unshift(newTodo);
         }
-        case todoTypes.EDIT_TODO: {
-            const indexItemToEdit = state.indexOf(action.payload);
-
-            return state.delete(indexItemToEdit);
+        case todoTypes.DELETE_TODO_SUCCESS: {
+            return state.filter((todo) => todo.get('id') !== payload);
         }
+        case todoTypes.EDIT_TODO_SUCCESS: {
+            const payloadId = fromJS(payload).get('id');
+            const index = state.findIndex((todo) => todo.get('id') === payloadId);
 
-        // case delete by indexof id
-        // case edit by indexof id
+            return state.set(index, payload);
+        }
+        case todoTypes.COMPLETE_TODO_SUCCESS: {
+            const payloadId = fromJS(payload).get('id');
+            const index = state.findIndex((todo) => todo.get('id') === payloadId);
+
+            return state.set(index, payload);
+        }
         // case toggleCompleted by indexof id
         // case toggleUncompleted by indexof id
         // case addToFauvorites by indexof id

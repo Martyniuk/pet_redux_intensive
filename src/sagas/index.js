@@ -4,6 +4,9 @@ import todos from './todos';
 export function* rootSaga () {
     yield all([
         todos.fetchTodosWatcher(),
-        todos.createTodoWatcher()
+        todos.createTodoWatcher(),
+        todos.deleteTodoWatcher(),
+        todos.editTodoWatcher(),
+        todos.completeTodoWatcher()
     ]);
 }

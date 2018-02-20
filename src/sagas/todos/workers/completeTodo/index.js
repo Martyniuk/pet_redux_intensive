@@ -1,17 +1,17 @@
 import { call, put } from 'redux-saga/effects';
 
-import todosActions from 'actions/todos';
+import todoActions from 'actions/todos';
 import { api, token } from 'instruments/api';
 
-export function* createTodoWorker ({ payload }) {
+export function* completeTodoWorker ({ payload }) {
     try {
         const options = {
-            method:  'POST',
+            method:  'PUT',
             headers: {
                 Authorization:  `${token}`,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message: payload }),
+            body: JSON.stringify([payload]),
         };
         const response = yield call(fetch, `${api}`, options);
         const { data, message } = yield call([response, response.json]);
@@ -20,8 +20,9 @@ export function* createTodoWorker ({ payload }) {
             throw new Error(message);
         }
 
-        yield put(todosActions.createTodoSuccess(data));
+        yield put(todoActions.completeTodoSuccess(data[0]));
     } catch ({ message }) {
-        yield put(todosActions.createTodoFail({ message }));
+        yield put(todoActions.completeTodoFail(message));
     }
+
 }

@@ -36,6 +36,8 @@ export const todoList = (state = initialState, { type, payload }) => {
 
             return state.set(index, fromJS(payload));
         }
+        case todoTypes.FILTER:
+            return fromJS(payload);
         default:
             return state;
     }

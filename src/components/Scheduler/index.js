@@ -30,6 +30,7 @@ export default class Scheduler extends Component {
         this.props.actions.fetchTodos();
         // this.refetch = setInterval(this.props.actions.fetchTodos(), 10000);
     }
+
     componentWillUnmount () {
         // clearInterval(this.refetch);
     }
@@ -58,7 +59,8 @@ export default class Scheduler extends Component {
         if (!text) {
             return;
         }
-        this.props.actions.createTodo(text);
+
+        this.props.actions.createTodo(text.trim().slice(0, 46));
 
         this.setState(() => ({ text: '' }));
     };
@@ -83,18 +85,37 @@ export default class Scheduler extends Component {
         actions.toggleFavourite(updatedTodo);
     };
 
-    // completeAll = () =>
-    //     this.setState(({ todos }) => ({
-    //         todoList: todos.map((todo) => {
-    //             todo.completed = true;
-    //
-    //             return todo;
-    //         }),
-    //     }));
+    completeAll = () => {
+        const { todoList } = this.props;
+
+        todoList.forEach((todo) => {
+            if (!todo.completed) {
+                this.complete(todo.id);
+            }
+        });
+    };
+
+    filterTodos = (e) => {
+        const { todoList, actions } = this.props;
+        const searchParam = e.target.value.toLowerCase();
+
+        if (searchParam === '') {
+            actions.fetchTodos();
+        }
+
+        const filteredList = todoList.filter((item) => {
+            if (item.message.toLowerCase().includes(searchParam)) {
+                return item;
+            }
+            return;
+        });
+
+        actions.filterTodos(filteredList);
+    };
 
     render () {
         const { text } = this.state;
-        const { todoList: todos, actions } = this.props;
+        const { actions, todoList: todos } = this.props;
         const allCompleted = todos.every((todo) => todo.completed);
         const todoList = todos.map(({ id, message, completed, favorite }) => (
             <Task
@@ -115,7 +136,7 @@ export default class Scheduler extends Component {
                 <main>
                     <header>
                         <h1>Планировщик задач</h1>
-                        <input placeholder = 'Поиск' type = 'search' />
+                        <input placeholder = 'Поиск' type = 'search' onChange = { this.filterTodos } />
                     </header>
                     <section>
                         <form onSubmit = { this.handleSubmit }>

@@ -53,6 +53,12 @@ export default Object.freeze({
         payload: error,
         error:   true,
     }),
+    filterTodos: (todos) => {
+        return {
+            type:    types.FILTER,
+            payload: todos,
+        };
+    },
     toggleCompleted: (todo) => ({
         type:    types.TOGGLE_COMPLETED,
         payload: todo,
@@ -66,23 +72,17 @@ export default Object.freeze({
         payload: error,
         error:   true,
     }),
-    toggleFavourite: (todo) => {
-        return {
-            type:    types.TOGGLE_FAVOURITE,
-            payload: todo,
-        };
-    },
-    toggleFavouriteSuccess: (todo) => {
-        return {
-            type:    types.TOGGLE_FAVOURITE_SUCCESS,
-            payload: todo,
-        };
-    },
-    toggleFavouriteFail: (error) => {
-        return {
-            type:    types.TOGGLE_FAVOURITE_FAIL,
-            payload: error,
-            error:   true,
-        };
-    },
+    toggleFavourite: (todo) => ({
+        type:    types.TOGGLE_FAVOURITE,
+        payload: todo,
+    }),
+    toggleFavouriteSuccess: (todo) => ({
+        type:    types.TOGGLE_FAVOURITE_SUCCESS,
+        payload: todo,
+    }),
+    toggleFavouriteFail: (error) => ({
+        type:    types.TOGGLE_FAVOURITE_FAIL,
+        payload: error,
+        error:   true,
+    }),
 });

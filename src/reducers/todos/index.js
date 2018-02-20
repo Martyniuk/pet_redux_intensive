@@ -22,13 +22,13 @@ export const todoList = (state = initialState, { type, payload }) => {
             const payloadId = fromJS(payload).get('id');
             const index = state.findIndex((todo) => todo.get('id') === payloadId);
 
-            return state.set(index, payload);
+            return state.set(index, fromJS(payload));
         }
         case todoTypes.COMPLETE_TODO_SUCCESS: {
             const payloadId = fromJS(payload).get('id');
             const index = state.findIndex((todo) => todo.get('id') === payloadId);
 
-            return state.set(index, payload);
+            return state.set(index, fromJS(payload));
         }
         // case toggleCompleted by indexof id
         // case toggleUncompleted by indexof id

@@ -72,12 +72,12 @@ export default Object.freeze({
             error:   true,
         };
     },
-    toggleUncompleted: (id) => {
-        return {
-            type:    types.TOGGLE_UNCOMPLETED,
-            payload: id,
-        };
-    },
+    // toggleUncompleted: (id) => {
+    //     return {
+    //         type:    types.TOGGLE_UNCOMPLETED,
+    //         payload: id,
+    //     };
+    // },
     addToFavourites: (id) => {
         return {
             type:    types.ADD_TO_FAVOURITES,

@@ -67,36 +67,14 @@ export default class Scheduler extends Component {
 
     complete = (id) => {
         const { actions, todoList } = this.props;
-
-        todoList.forEach((todo) => {
-            if (todo.id === id) {
-                if (todo.completed) {
-                    const updatedTodo = Object.assign({}, todo, {
-                        completed: !todo.completed,
-                    });
-
-                    actions.toggleUncompleted(updatedTodo);
-                } else {
-                    const updatedTodo = Object.assign({}, todo, {
-                        completed: !todo.completed,
-                    });
-
-                    actions.completeTodo(updatedTodo);
-                }
-            }
+        const [todoById] = todoList.filter((todo) => todo.id === id);
+        const updatedTodo = Object.assign({}, todoById, {
+            completed: !todoById.completed,
         });
+
+        actions.completeTodo(updatedTodo);
     };
-
-    // this.setState(({ todos }) => ({
-    //     todoList: todos.map((todo) => {
-    //         if (todo.id === id) {
-    //             todo.completed = !todo.completed;
-    //         }
-    //
-    //         return todo;
-    //     }),
-    // }));
-
+    
     // changePriority = (id) =>
     //     this.setState(({ todos }) => ({
     //         todoList: todos.map((todo) => {

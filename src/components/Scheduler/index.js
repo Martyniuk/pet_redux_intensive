@@ -97,7 +97,7 @@ export default class Scheduler extends Component {
 
     filterTodos = (e) => {
         const { todoList, actions } = this.props;
-        const searchParam = e.target.value.toLowerCase();
+        const searchParam = e.target.value.toLowerCase().trim();
 
         if (searchParam === '') {
             actions.fetchTodos();

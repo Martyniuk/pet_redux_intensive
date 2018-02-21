@@ -22,24 +22,14 @@ export default class Task extends Component {
         message:        PropTypes.string.isRequired,
     };
 
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
 
         this.state = {
-            message:  '',
+            message:  props.message,
             editable: false,
         };
     }
-
-    componentDidMount () {
-        this.messageFromPropsToState();
-    }
-
-    messageFromPropsToState = () => {
-        const { message } = this.props;
-
-        this.setState(() => ({ message }));
-    };
 
     complete = () => {
         const { id, complete } = this.props;
@@ -54,7 +44,9 @@ export default class Task extends Component {
     };
 
     handleEditTodo = () => {
-        this.setState(() => ({ editable: true }));
+        if (!this.props.completed) {
+            this.setState(() => ({ editable: true }));
+        }
     };
 
     handleDeleteTodo = () => {

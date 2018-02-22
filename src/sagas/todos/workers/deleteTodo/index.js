@@ -14,9 +14,6 @@ export function* deleteTodoWorker ({ payload: id }) {
         const response = yield call(fetch, `${api}/${id}`, options);
 
         if (response.status !== 204) {
-            if (response.status === 401) {
-                console.log(`status ${response.status} - Unauthorized`);
-            }
             throw new Error(response.message);
         }
 

@@ -27,12 +27,12 @@ export default class Scheduler extends Component {
     }
 
     componentDidMount () {
-        // this.props.actions.fetchTodos();
-        // this.refetch = setInterval(this.props.actions.fetchTodos(), 10000);
+        this.props.actions.fetchTodos();
+        this.refetch = setInterval(this.props.actions.fetchTodos(), 10000);
     }
 
     componentWillUnmount () {
-        // clearInterval(this.refetch);
+        clearInterval(this.refetch);
     }
 
     handleSubmit = (event) => {
@@ -107,7 +107,8 @@ export default class Scheduler extends Component {
             if (item.message.toLowerCase().includes(searchParam)) {
                 return item;
             }
-            return;
+
+            return '';
         });
 
         actions.filterTodos(filteredList);

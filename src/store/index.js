@@ -6,7 +6,7 @@ import createSagaMiddleware from 'redux-saga';
 // Instruments
 import { rootReducer } from '../reducers';
 import { rootSaga } from '../sagas';
-import { loadState } from "./persistentStorage";
+import { loadState } from './persistentStorage';
 import { fromJS } from 'immutable';
 const middleware = [];
 
@@ -25,9 +25,8 @@ if (dev) {
     middleware.push(logger);
 }
 
-console.log(loadState());
 const persistentState = fromJS(loadState());
-console.log('persistentState', persistentState);
+
 const store = createStore(rootReducer, { todoList: persistentState }, composeEnhancers(applyMiddleware(...middleware)));
 
 export default store;

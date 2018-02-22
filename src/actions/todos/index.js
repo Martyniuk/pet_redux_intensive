@@ -53,12 +53,10 @@ export default Object.freeze({
         payload: error,
         error:   true,
     }),
-    filterTodos: (todos) => {
-        return {
-            type:    types.FILTER,
-            payload: todos,
-        };
-    },
+    filterTodos: (todos) => ({
+        type:    types.FILTER,
+        payload: todos,
+    }),
     toggleCompleted: (todo) => ({
         type:    types.TOGGLE_COMPLETED,
         payload: todo,

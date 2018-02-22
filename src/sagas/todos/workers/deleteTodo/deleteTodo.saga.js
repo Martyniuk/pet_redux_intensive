@@ -17,10 +17,18 @@ import { deleteTodoWorker } from './';
 
 setup();
 
-const saga = cloneableGenerator(deleteTodoWorker)();
+const saga = cloneableGenerator(deleteTodoWorker)(todosActions);
 
 describe('Delete Todo Saga-Worker:', () => {
     test('should call a fetch request', () => {
+        console.log('saga _--------------------------> ', saga.next());
+        console.log('fetch _--------------------------> ', call(fetch, `${api}/${id}`, {
+            method:  'DELETE',
+            headers: {
+                Authorization: `${token}`,
+            },
+        }));
+
         expect(saga.next().value).toEqual(call(fetch, `${api}/${id}`, {
             method:  'DELETE',
             headers: {

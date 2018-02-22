@@ -27,7 +27,7 @@ export default class Scheduler extends Component {
     }
 
     componentDidMount () {
-        this.props.actions.fetchTodos();
+        // this.props.actions.fetchTodos();
         // this.refetch = setInterval(this.props.actions.fetchTodos(), 10000);
     }
 

@@ -16,7 +16,14 @@ export const todosAfterFilter = [
     { id: '1', message: 'message', completed: false, favourite: false }
 ];
 export const responseData = {
-    data:    todo,
+    data: {
+        id: '',
+        completed: '',
+        favorite: '',
+        message: '',
+        created: '',
+        modified: '',
+    },
     message: successMessage,
 };
 export const responseDataFail = {
@@ -32,7 +39,7 @@ export const responseFail = {
 };
 export const setup = () => {
     /* eslint-env node */
-    global.fetch = jest.fn(() => Promise.resolve(responseSuccess));
+    global.fetch = jest.fn(() => Promise.resolve(responseData));
 };
 export const actions = {
     fetchTodosSuccess:               { type: 'FETCH_TODOS_SUCCESS', payload: todos },

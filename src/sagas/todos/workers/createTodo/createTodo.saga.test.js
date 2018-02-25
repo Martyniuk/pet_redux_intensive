@@ -16,17 +16,18 @@ import { createTodoWorker } from './';
 
 setup();
 
-const saga = cloneableGenerator(createTodoWorker)(todosActions);
+const saga = cloneableGenerator(createTodoWorker)(todosActions.createTodo('hello'));
+// const saga = createTodoWorker();
 
 describe('Create Todo Saga-Worker:', () => {
     test('should call a fetch request', () => {
-        expect(saga.next(response).value).toEqual(call(fetch, api, {
+        expect(saga.next().value).toEqual(call(fetch, api, {
             method:  'POST',
             headers: {
                 Authorization:  `${token}`,
                 'Content-Type': 'application/json',
             },
-            body: '{}',
+            body: JSON.stringify({ text }),
         }));
     });
 });

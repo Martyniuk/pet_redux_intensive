@@ -6,7 +6,7 @@ import { api } from 'instruments/api';
 import {
     token,
     setup,
-    response,
+    responseSuccess,
     responseFail,
     responseDataFail,
     responseData,
@@ -15,19 +15,46 @@ import {
 import { createTodoWorker } from './';
 
 setup();
-
-const saga = cloneableGenerator(createTodoWorker)(todosActions.createTodo('hello'));
-// const saga = createTodoWorker();
+const createTodoAction = todosActions.createTodo(text);
+const saga = cloneableGenerator(createTodoWorker)(createTodoAction);
 
 describe('Create Todo Saga-Worker:', () => {
     test('should call a fetch request', () => {
-        expect(saga.next().value).toEqual(call(fetch, api, {
+        const options = {
             method:  'POST',
             headers: {
-                Authorization:  `${token}`,
+                Authorization:  token,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ text }),
-        }));
+            body: JSON.stringify({ message: text }),
+        };
+        const sagaNext = saga.next().value;
+        const fetchQuery = call(fetch, api, options);
+
+        expect(sagaNext).toEqual(fetchQuery);
+    });
+
+    test('should handle !== 200 ', () => {
+        const clone = saga.clone();
+        const failedResponse = clone.next(responseFail).value;
+        const expectedFailedResponse = call([responseFail, responseFail.json]);
+
+        expect(failedResponse).toEqual(expectedFailedResponse);
+
+        const failedResponseData = clone.next(responseDataFail).value;
+
+        expect(failedResponseData).toEqual(put(todosActions.createTodoFail({ message: error.message })));
+    });
+    test('should return valid response', () => {
+        const validResponse = saga.next(responseSuccess).value;
+        const expectedValidResponse = call([responseSuccess, responseSuccess.json]);
+
+        expect(validResponse).toEqual(expectedValidResponse);
+    });
+    test('should dispatch todoActions success', () => {
+        const successfulResponse = saga.next(responseData).value;
+        const expectedSuccessfulResponse = put(todosActions.createTodoSuccess(responseData.data));
+
+        expect(successfulResponse).toEqual(expectedSuccessfulResponse);
     });
 });

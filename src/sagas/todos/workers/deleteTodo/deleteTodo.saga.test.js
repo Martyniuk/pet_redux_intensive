@@ -1,19 +1,16 @@
 import { call, put } from 'redux-saga/effects';
 import { cloneableGenerator } from 'redux-saga/utils';
 
+import { deleteTodoWorker } from './index';
 import todosActions from 'actions/todos';
 import { api } from 'instruments/api';
 import {
-    token,
-    setup,
-    responseSuccess,
-    responseFail,
     responseDataFail,
     responseSuccessDelete,
     error,
-    id,
-    text } from 'mocks';
-import { deleteTodoWorker } from './';
+    token,
+    setup,
+    id } from 'mocks';
 
 setup();
 const deleteTodoAction = todosActions.deleteTodo(id);

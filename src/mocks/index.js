@@ -4,14 +4,35 @@ export const successMessage = 'Success message';
 export const errorMessage = 'Error message';
 export const error = new Error(errorMessage);
 export const id = '1';
+export const responseDataEdit = {
+    data: [
+        {
+            "id": "5a7eee9667fced9f3fc68702",
+            "message": "Hello Andrey!",
+            "completed": true,
+            "favorite": true,
+            "created": "2018-02-10T13:07:34.446Z",
+            "modified": "2018-02-10T15:56:37.173Z"
+        },
+        {
+            "id": "5a7eee9767fced9f3fc68703",
+            "message": "Hello world!!!",
+            "completed": true,
+            "favorite": false,
+            "created": "2018-02-10T13:07:35.227Z",
+            "modified": "2018-02-10T15:56:37.171Z"
+        }
+    ],
+    message: successMessage,
+};
 export const responseData = {
     data: {
-        id:        '',
+        id: '',
         completed: '',
-        favorite:  '',
-        message:   text,
-        created:   '',
-        modified:  '',
+        favorite: '',
+        message: text,
+        created: '',
+        modified: '',
     },
     message: successMessage,
 };
@@ -26,15 +47,15 @@ export const responseDataFail = {
 };
 export const responseSuccessDelete = {
     status: 204,
-    json:   () => Promise.resolve(responseDataOnDelete),
+    json: () => Promise.resolve(responseDataOnDelete),
 };
 export const responseSuccess = {
     status: 200,
-    json:   () => Promise.resolve(responseData),
+    json: () => Promise.resolve(responseData),
 };
 export const responseFail = {
     status: 401,
-    json:   () => Promise.resolve(responseDataFail),
+    json: () => Promise.resolve(responseDataFail),
 };
 export const setup = () => {
     /* eslint-env node */

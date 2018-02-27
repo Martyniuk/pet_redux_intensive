@@ -1,42 +1,36 @@
 import { call, put } from 'redux-saga/effects';
 import { cloneableGenerator } from 'redux-saga/utils';
 
-import todosAction from 'actions/todos';
+import todosActions from 'actions/todos';
 import { api } from 'instruments/api';
-import { editTodoWorker } from './';
-
-// Mocks
+import { fetchTodosWorker } from './index';
 import {
-    responseDataEdit,
+    responseDataFetch,
     responseDataFail,
-    responseSuccess,
     responseFail,
+    responseSuccess,
     errorMessage,
-    error,
-    todo,
     token,
     setup
 } from 'mocks';
 
 setup();
 
-const editTodoAction = todosAction.editTodo(todo);
-const saga = cloneableGenerator(editTodoWorker)(editTodoAction);
+const fetchTodosAction = todosActions.fetchTodos();
+const saga = cloneableGenerator(fetchTodosWorker)(fetchTodosAction);
 
-describe('Edit Todo Saga-Worker:', () => {
-    test('should create a fetch request:', () => {
+describe('Fetch todos Saga-Worker:', () => {
+    test('should create a fetch request', () => {
         const options = {
-            method:  'PUT',
+            method:  'GET',
             headers: {
-                Authorization:  token,
-                'Content-Type': 'application/json',
+                Authorization: token,
             },
-            body: JSON.stringify([todo]),
         };
         const sagaNext = saga.next().value;
-        const expectedResult = call(fetch, `${api}`, options);
+        const fetchRequest = call(fetch, api, options);
 
-        expect(sagaNext).toEqual(expectedResult);
+        expect(sagaNext).toEqual(fetchRequest);
     });
     test('should handle !== 200', () => {
         const clone = saga.clone();
@@ -46,9 +40,9 @@ describe('Edit Todo Saga-Worker:', () => {
         expect(sagaNextFail).toEqual(failedResponse);
 
         const failedResponseData = clone.next(responseDataFail).value;
-        const editTodoActionFail = put(todosAction.editTodoFail(errorMessage));
+        const editTodoFail = put(todosActions.fetchTodosFail(errorMessage));
 
-        expect(failedResponseData).toEqual(editTodoActionFail);
+        expect(failedResponseData).toEqual(editTodoFail);
     });
     test('should return valid response', () => {
         const sagaNext = saga.next(responseSuccess).value;
@@ -56,9 +50,9 @@ describe('Edit Todo Saga-Worker:', () => {
 
         expect(sagaNext).toEqual(expectedValidResponse);
     });
-    test('should dispatch editTodo success action', () => {
-        const successfulResponse = saga.next(responseDataEdit).value;
-        const expectedSuccessfulResponse = put(todosAction.editTodoSuccess(responseDataEdit.data[0]));
+    test('should dispatch fetchTodo success action', () => {
+        const successfulResponse = saga.next({ data: responseDataFetch }).value;
+        const expectedSuccessfulResponse = put(todosActions.fetchTodosSuccess(responseDataFetch));
 
         expect(successfulResponse).toEqual(expectedSuccessfulResponse);
     });

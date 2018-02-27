@@ -36,6 +36,69 @@ export const responseData = {
     },
     message: successMessage,
 };
+export const responseDataFetch = {
+    data: [
+        {
+            id: '',
+            completed: '',
+            favorite: '',
+            message: '',
+            created: '',
+            modified: '',
+        },
+        {
+            id: '',
+            completed: '',
+            favorite: '',
+            message: '',
+            created: '',
+            modified: '',
+        }
+    ],
+    message: successMessage,
+};
+export const responseDataToggleCompleted = {
+    data: [
+        {
+            "id":        "5a7eee9667fced9f3fc68702",
+            "message":   "Hello Andrey!",
+            "completed": true,
+            "favorite":  true,
+            "created":   "2018-02-10T13:07:34.446Z",
+            "modified":  "2018-02-10T15:56:37.173Z"
+        },
+        {
+            "id":        "5a7eee9767fced9f3fc68703",
+            "message":   "Hello world!!!",
+            "completed": false,
+            "favorite":  false,
+            "created":   "2018-02-10T13:07:35.227Z",
+            "modified":  "2018-02-10T15:56:37.171Z"
+        }
+    ],
+    message: successMessage,
+};
+export const responseDataToggleFavourite = {
+    data: [
+        {
+            "id":        "5a7eee9667fced9f3fc68702",
+            "message":   "Hello Andrey!",
+            "completed": true,
+            "favorite":  true,
+            "created":   "2018-02-10T13:07:34.446Z",
+            "modified":  "2018-02-10T15:56:37.173Z"
+        },
+        {
+            "id":        "5a7eee9767fced9f3fc68703",
+            "message":   "Hello world!!!",
+            "completed": false,
+            "favorite":  false,
+            "created":   "2018-02-10T13:07:35.227Z",
+            "modified":  "2018-02-10T15:56:37.171Z"
+        }
+    ],
+    message: successMessage,
+};
 export const responseDataOnDelete = {
     data: {
         id,

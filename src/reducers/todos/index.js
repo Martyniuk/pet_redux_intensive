@@ -19,6 +19,7 @@ export const todoList = (state = initialState, { type, payload }) => {
             return state.filter((todo) => todo.get('id') !== payload);
         }
         case todoTypes.EDIT_TODO_SUCCESS: {
+            console.log(`payload in Edit todo --> reducer --> `, payload);
             const payloadId = fromJS(payload).get('id');
             const index = state.findIndex((todo) => todo.get('id') === payloadId);
 

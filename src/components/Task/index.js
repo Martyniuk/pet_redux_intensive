@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
+import Transition from 'react-transition-group/Transition';
+import { fromTo } from 'gsap';
 
 // Instruments
 import Styles from './styles';
@@ -71,6 +73,17 @@ export default class Task extends Component {
             editTodo({ id, message, completed, favorite });
         }
     };
+    handleTaskOnEnter = (task) => {
+        fromTo(task, 2, { y: 300, opacity: 0 }, { y: 0, opacity: 1 });
+    };
+    // handleTaskOnExit = (ele) => {
+    //     const el = this.element;
+    //     console.log(`el ->`, el);
+    //     console.log(`el ->`, ele);
+    //     fromTo(el, 2, { y: 0, opacity: 1 }, { y: -100, opacity: 0 });
+    //     // TweenLite.to(task, 2.5, { ease: Back.easeOut.config(1.7), y: -500 });
+    //     // TweenLite.to(task, 2, { opacity: 0.5, x: 300 });
+    // };
 
     render () {
         const { editable, message } = this.state;
@@ -89,29 +102,35 @@ export default class Task extends Component {
             : message;
 
         return (
-            <li className = { styles }>
-                <div>
-                    <Checkbox
-                        checked = { completed }
-                        color1 = '#3B8EF3'
-                        color2 = '#FFF'
-                        onClick = { this.complete }
-                    />
-                    <code>
-                        {messageView}
-                    </code>
-                </div>
-                <div>
-                    <Star
-                        checked = { favorite }
-                        color1 = '#3B8EF3'
-                        color2 = '#000'
-                        onClick = { this.changePriority }
-                    />
-                    <Edit color1 = '#3B8EF3' color2 = '#000' onClick = { this.handleEditTodo } />
-                    <Delete color1 = '#3B8EF3' color2 = '#000' onClick = { this.handleDeleteTodo } />
-                </div>
-            </li>
+            <Transition
+                appear
+                in
+                timeout = { 2000 }
+                onEnter = { this.handleTaskOnEnter }>
+                <li className = { styles }>
+                    <div>
+                        <Checkbox
+                            checked = { completed }
+                            color1 = '#3B8EF3'
+                            color2 = '#FFF'
+                            onClick = { this.complete }
+                        />
+                        <code>
+                            {messageView}
+                        </code>
+                    </div>
+                    <div>
+                        <Star
+                            checked = { favorite }
+                            color1 = '#3B8EF3'
+                            color2 = '#000'
+                            onClick = { this.changePriority }
+                        />
+                        <Edit color1 = '#3B8EF3' color2 = '#000' onClick = { this.handleEditTodo } />
+                        <Delete color1 = '#3B8EF3' color2 = '#000' onClick = { this.handleDeleteTodo } />
+                    </div>
+                </li>
+            </Transition>
         );
     }
 }

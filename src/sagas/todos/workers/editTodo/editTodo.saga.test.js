@@ -12,7 +12,6 @@ import {
     responseSuccess,
     responseFail,
     errorMessage,
-    error,
     todo,
     token,
     setup

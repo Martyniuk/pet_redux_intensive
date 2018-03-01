@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 // Instruments
 import todoActions from 'actions/todos';
 import { sort } from '../../instruments/helpers';
+import { getTodos } from 'selectors/todos';
 
 // Components
 import Scheduler from 'components/Scheduler';
@@ -22,7 +23,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        todoList: state.todoList.toJS(),
+        todoList: getTodos(state),
     };
 };
 

@@ -14,22 +14,24 @@ import Star from 'theme/assets/Star';
 
 export default class Task extends Component {
     static propTypes = {
-        changePriority: PropTypes.func.isRequired,
-        complete:       PropTypes.func.isRequired,
-        completed:      PropTypes.bool.isRequired,
-        deleteTodo:     PropTypes.func.isRequired,
-        editTodo:       PropTypes.func.isRequired,
-        favorite:       PropTypes.bool.isRequired,
-        id:             PropTypes.string.isRequired,
-        message:        PropTypes.string.isRequired,
+        changePriority:    PropTypes.func.isRequired,
+        chosenTodoClear:   PropTypes.func.isRequired,
+        complete:          PropTypes.func.isRequired,
+        completed:         PropTypes.bool.isRequired,
+        deleteTodo:        PropTypes.func.isRequired,
+        editable:          PropTypes.bool.isRequired,
+        editTodo:          PropTypes.func.isRequired,
+        favorite:          PropTypes.bool.isRequired,
+        getIdOfTodoToEdit: PropTypes.func.isRequired,
+        id:                PropTypes.string.isRequired,
+        message:           PropTypes.string.isRequired,
     };
 
     constructor (props) {
         super(props);
 
         this.state = {
-            message:  props.message,
-            editable: false,
+            message: props.message,
         };
     }
 
@@ -46,8 +48,10 @@ export default class Task extends Component {
     };
 
     handleEditTodo = () => {
+        const { id, getIdOfTodoToEdit } = this.props;
+
         if (!this.props.completed) {
-            this.setState(() => ({ editable: true }));
+            getIdOfTodoToEdit(id);
         }
     };
 
@@ -64,13 +68,13 @@ export default class Task extends Component {
     };
 
     handleInputKeyPress = (event) => {
-        const { editTodo, id, favorite, completed } = this.props;
+        const { chosenTodoClear, editTodo, id, favorite, completed } = this.props;
         const { message } = this.state;
 
         if (event.key === 'Enter') {
             event.preventDefault();
-            this.setState(() => ({ editable: false }));
             editTodo({ id, message, completed, favorite });
+            chosenTodoClear();
         }
     };
     handleTaskOnEnter = (task) => {
@@ -86,8 +90,8 @@ export default class Task extends Component {
     // };
 
     render () {
-        const { editable, message } = this.state;
-        const { completed, favorite } = this.props;
+        const { message } = this.state;
+        const { completed, editable, favorite } = this.props;
 
         const styles = cx(Styles.task, {
             [Styles.completed]: completed,

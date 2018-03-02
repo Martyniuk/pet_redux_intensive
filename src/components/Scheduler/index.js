@@ -14,8 +14,9 @@ import Task from '../Task';
 
 export default class Scheduler extends Component {
     static propTypes = {
-        actions:  object.isRequired,
-        todoList: array.isRequired,
+        actions:      object.isRequired,
+        editableTodo: object.isRequired,
+        todoList:     array.isRequired,
     };
     static defaultProps = {
         actions:  {},
@@ -25,7 +26,7 @@ export default class Scheduler extends Component {
         super();
 
         this.state = {
-            text: '',
+            text:     '',
         };
     }
 
@@ -116,6 +117,15 @@ export default class Scheduler extends Component {
 
         actions.filterTodos(filteredList);
     };
+    getIdOfTodoToEdit = (id) => {
+        const { actions, todoList } = this.props;
+        const obj = {
+            id,
+            editable: todoList.some((e) => e.id === id),
+        };
+
+        actions.choseTodoForEdit(obj);
+    };
     handleHeaderOnEnter = (header) => {
         TweenMax.from(header, 3, { x: -500, opacity: 0, ease: Power2.easeIn }); // eslint-disable-line
     };
@@ -128,19 +138,23 @@ export default class Scheduler extends Component {
 
     render () {
         const { text } = this.state;
-        const { actions, todoList: todos } = this.props;
+        const { actions, editableTodo, todoList: todos } = this.props;
         const allCompleted = todos.every((todo) => todo.completed);
         const todoList = todos.map(({ id, message, completed, favorite }) => (
             <Task
                 changePriority = { this.changePriority }
+                chosenTodoClear = { actions.chosenTodoClear }
+                choseTodoForEdit = { actions.choseTodoForEdit }
                 complete = { this.complete }
                 completed = { completed }
                 deleteTodo = { actions.deleteTodo }
+                editable = { editableTodo.id === id }
                 editTodo = { actions.editTodo }
                 favorite = { favorite }
                 id = { id }
                 key = { id }
                 message = { message }
+                getIdOfTodoToEdit = { this.getIdOfTodoToEdit }
             />
         ));
 

@@ -151,10 +151,10 @@ export default class Scheduler extends Component {
                 editable = { editableTodo.id === id }
                 editTodo = { actions.editTodo }
                 favorite = { favorite }
+                getIdOfTodoToEdit = { this.getIdOfTodoToEdit }
                 id = { id }
                 key = { id }
                 message = { message }
-                getIdOfTodoToEdit = { this.getIdOfTodoToEdit }
             />
         ));
 

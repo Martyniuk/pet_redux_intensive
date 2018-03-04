@@ -26,7 +26,7 @@ export default class Scheduler extends Component {
         super();
 
         this.state = {
-            text:     '',
+            text: '',
         };
     }
 

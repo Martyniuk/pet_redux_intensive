@@ -8,7 +8,7 @@ export function* fetchTodosWorker () {
         const options = {
             method:  'GET',
             headers: {
-                Authorization: `${token}`,
+                Authorization: token,
             },
         };
 
@@ -20,7 +20,7 @@ export function* fetchTodosWorker () {
         }
 
         yield put(todosActions.fetchTodosSuccess(data));
-    } catch (error) {
-        yield put(todosActions.fetchTodosFail(error.message));
+    } catch ({ message }) {
+        yield put(todosActions.fetchTodosFail(message));
     }
 }

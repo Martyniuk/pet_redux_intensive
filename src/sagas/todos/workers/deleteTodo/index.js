@@ -16,7 +16,6 @@ export function* deleteTodoWorker ({ payload: id }) {
         if (response.status !== 204) {
             throw new Error(response.message);
         }
-
         yield put(todosActions.deleteTodoSuccess(id));
     } catch ({ message }) {
         yield put(todosActions.deleteTodoFail(message));

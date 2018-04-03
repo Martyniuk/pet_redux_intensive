@@ -5,30 +5,33 @@ import { bindActionCreators } from 'redux';
 
 // Instruments
 import todoActions from 'actions/todos';
+import choseTodoForEditAction from 'actions/todo';
 import { sort } from '../../instruments/helpers';
+import { getTodos } from 'selectors/todos';
 
 // Components
 import Scheduler from 'components/Scheduler';
 
 class App extends Component {
     render () {
-        const { actions, todoList } = this.props;
+        const { actions, todoList, editableTodo } = this.props;
         const sortedList = sort(todoList);
 
-        return <Scheduler actions = { actions } todoList = { sortedList } />;
+        return <Scheduler actions = { actions } editableTodo = { editableTodo } todoList = { sortedList } />;
     }
 }
 
 
 const mapStateToProps = (state) => {
     return {
-        todoList: state.todoList.toJS(),
+        todoList:     getTodos(state),
+        editableTodo: state.editableTodo.toJS(),
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({ ...todoActions }, dispatch),
+        actions: bindActionCreators({ ...todoActions, ...choseTodoForEditAction }, dispatch),
     };
 };
 

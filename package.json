@@ -1,7 +1,7 @@
 {
   "name": "Lectrum",
   "version": "0.1.0",
-  "homepage": "http://myname.github.io/",
+  "homepage": "https://martyniuk.github.io/pet_redux_intensive_10-02-2018/",
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.2",

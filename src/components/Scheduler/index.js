@@ -119,6 +119,7 @@ export default class Scheduler extends Component {
 
         actions.filterTodos(filteredList);
     };
+
     getIdOfTodoToEdit = (id) => {
         const { actions, todoList } = this.props;
         const obj = {
